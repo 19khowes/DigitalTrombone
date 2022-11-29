@@ -1,0 +1,11 @@
+--cpu=Cortex-M4.fp.sp --branchpatch=sdcomp-29491-629360
+".\objects\main.o"
+".\objects\startup_stm32l476xx.o"
+".\objects\usart.o"
+".\objects\buzzer.o"
+".\objects\keypad.o"
+".\objects\ultrasonic.o"
+--strict --scatter ".\Objects\DigitalTrombone.sct"
+--diag_suppress=L6314W --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\DigitalTrombone.map" -o .\Objects\DigitalTrombone.axf

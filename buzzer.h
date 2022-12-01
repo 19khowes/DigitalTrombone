@@ -1,5 +1,5 @@
-#ifndef __STM32L476R_NUCLEO_STEPPER_H
-#define __STM32L476R_NUCLEO_STEPPER_H
+#ifndef __STM32L476R_BUZZER_H
+#define __STM32L476R_BUZZER_H
 
 void SysTick_Initialize(unsigned int ticks);
 void SysTick_Load(unsigned int ticks);

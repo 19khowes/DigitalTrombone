@@ -12,8 +12,25 @@ unsigned char ultraData[4];
 
 Psedocode 
 Begin
-	Set up GPIO for USART2
-	Enable USART2
+	Set up GPIO for USART2 and 1
+	Enable USART2 for USB communication
+	Enable USART1
+	intialize buzzer
+	Initialize SysTick with 0 (paused)
+	Initialize keypad
+	setup ultra sonic tx pin
+	Set USART1 TX pin to 0 (low) to quick sample
+	
+	Loop forever
+		Read data from ultrasonic sensor
+		Convert sensor data to frequency
+		Read octave scale from keypad
+		If octave scale is not 0
+		Then
+			Load the SysTick reload with the converted scaled frequency
+		Else
+		EndIf
+	EndLoop
 End
 */
 int main(void){
@@ -40,16 +57,17 @@ int main(void){
 	uint8_t msgRecieve;
 	double audFreq = 65.406;
 	while(1) {
+		// Read data from ultrasonic sensor
 		USART_Read(USART1, ultraData, 4);
-		// audFreq = sensor_data_to_hertz(0x01, 0x0E);
+		// Convert sensor data to frequency
 		audFreq = sensor_data_to_hertz(ultraData[1], ultraData[2]);
+		// Read octave scale from keypad
 		octaveScale = keypad_listen();
-		// button pushed
+		// If octave scale is not 0
 		if (octaveScale != 0) {
-			//USART_Write(USART2, ultraData, 4);
+			// Load the SysTick reload with the converted scaled frequency
 			hertz_to_load(octaveScale * audFreq);
 		}
-		//USART_Read(USART1, ultraData, 1);
 	}
 }
 
